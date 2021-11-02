@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="js/md5.js"></script>
+</head>
+<body>
+<div>
+    <span>用户名:</span>
+    <input type="text" id="userInp">
+    <hr>
+    <span>密码:</span>
+    <input type="password" id="passInp">
+    <hr>
+    <button id="btn">登陆</button>
+</div>
+<script !src="">
+    //登陆
+    let loginBtn = document.querySelector('#btn')
+    loginBtn.addEventListener('click', () => {
+        // 收集输入框账号和密码
+        let userName = document.querySelector('#userInp').value;
+        let password = hex_md5(document.querySelector('#passInp').value);
+        // 发送请求
+        axios({
+            url: 'http://localhost:5423/api/login',
+            method: "POST",
+            // params, data2个配置项
+            // params的参数会出现在url?后面
+            // data里的参数会出现在请求体里面
+            // 都要跟后端对应上
+            data: {
+                user: userName,
+                pass: password
+            }
+        }).then(res => {
+            console.log(res); // 后端返回的结果
+            if(res.data.code===1){
+                alert('登陆成功!!');
+                localStorage.setItem('token',res.data.token);
+                location.href='./userInfo.html'
+            }else{
+                alert('登陆失败!!');
+            }
+        })
+    })
+
+
+</script>
+</body>
+</html>

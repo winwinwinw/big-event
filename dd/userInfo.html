@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
+</head>
+<body>
+<p>
+<div>
+    用户名: <span id="userName"></span>
+</div>
+<div>
+    昵称: <span id="nickName"></span>
+</div>
+<div>
+    邮箱: <span id="email"></span>
+</div>
+<div>
+    头像: <img src="" id="headImg" alt="">
+</div>
+</p>
+<script>
+    let username=document.querySelector('#userName');
+    let nickname=document.querySelector('#nickName');
+    let email=document.querySelector('#email');
+    let headImg=document.querySelector('#headImg');
+
+    axios({
+        url: 'http://localhost:5423/my/userInfo', // 接口文档说/my/userInfo是用户信息接口
+        method: 'GET',
+        headers: {
+            // 后端说了需要携带token在请求头里Authorization字段下
+            Authorization: localStorage.getItem('token')
+        }
+    }).then(res => {
+        console.log(res);
+    }).catch(err=>{
+        console.dir(err);
+    })
+</script>
+</body>
+</html>
